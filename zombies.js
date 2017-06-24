@@ -329,6 +329,36 @@ class Player {
     }
   }
 }
+
+class Zombie{
+  constructor (health, strength, speed){
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this._maxHealth = health;
+    this.isAlive = true;
+  }
+}
+class FastZombie extends Zombie{
+  constructor (health, strength, speed){
+    super(health, strength, speed);
+  }
+}
+class StrongZombie extends Zombie{
+  constructor (health, strength, speed){
+    super(health, strength, speed);
+  }
+}
+class RangedZombie extends Zombie{
+  constructor (health, strength, speed){
+    super (health, strength, speed);
+  }
+}
+class ExplodingZombie extends Zombie{
+  constructor (health, strength, speed){
+    super (health, strength, speed);
+  }
+}
 /**
  * Class => Zombie(health, strength, speed)
  * -----------------------------
@@ -387,25 +417,7 @@ class Player {
  * StrongZombie Extends Zombie Class
  * -----------------------------
  */
- class Zombie{
-  constructor (health, strength, speed){
-    this.health = health;
-    this.strength = strength;
-    this.speed = speed;
-    this._maxHealth = health;
-    this.isAlive = true;
-  }
-}
-class FastZombie extends Zombie{
-  constructor (health, strength, speed){
-    super(health, strength, speed);
-  }
-}
-class StrongZombie extends Zombie{
-  constructor (health, strength, speed){
-    super(health, strength, speed);
-  }
-}
+
 
 
 /**
