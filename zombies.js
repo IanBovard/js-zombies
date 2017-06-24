@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 /**
  * Class => Item(name)
  * -----------------------------
@@ -7,7 +8,11 @@
  * @param {string} name     The item's name.
  * @property {string} name
  */
-
+ class Item{
+  constructor (name){
+    this.name = name;
+  }
+}
 
 /**
  * Class => Weapon(name, damage)
@@ -30,7 +35,12 @@
  * Weapon Extends Item Class
  * -----------------------------
  */
-
+ class Weapon extends Item {
+  constructor (name, damage){
+    super(name);
+    this.damage = damage;
+  }
+}
 
 
 /**
@@ -54,7 +64,12 @@
  * Food Extends Item Class
  * -----------------------------
  */
-
+ class Food extends Item {
+  constructor (name, energy){
+    super(name);
+    this.energy = energy;
+  }
+}
 
 
 /**
@@ -78,8 +93,43 @@
  * @property {method} getPack              Returns private variable `pack`.
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
-
-
+ class Player {
+  constructor (name, health, strength, speed){
+    this._pack = [];
+    this._maxHealth = health;
+    this.name = name;
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this.isAlive = true;
+    this.equipped = false;
+  }
+  getPack(){
+    return this._pack;
+  }
+  getMaxHealth(){
+    return this._maxHealth;
+  }
+  checkPack(){
+    console.log("Your stash: " + this._pack.join(" , "));
+   return this._pack;
+ }
+ takeItem(item){
+  if (item instanceof Item){
+    if (this._pack.length < 3){
+      this._pack.push(item);
+      console.log(this.name , "put" , item.name , "in their stash!");
+      return true;
+    }else if (this._pack.length === 3){
+      console.log(this.name , " has not room for this!");
+      return false;
+    }
+  }
+}
+}
+let thisguy = new Player("Guy", 2, 1, 2);
+console.log(thisguy);
+console.log(thisguy.checkPack);
 /**
  * Player Class Method => checkPack()
  * -----------------------------
@@ -323,7 +373,7 @@
  * Sample run.
  * Feel free to edit this and check your game logic.
  */
-function runGame() {
+ function runGame() {
   // var player = new Player("Joan", 500, 30, 70);
   // var zombie = new Zombie(40, 50, 20);
   // var charger = new FastZombie(175, 25, 60);
