@@ -145,15 +145,19 @@
       if (equip !== -1 && this.equipped === false){
         this.equipped = itemToEquip;
         this._pack.splice(equip,1);
+        console.log(this.name, "has got their grubby mitts around a", itemToEquip.name, ", alright!");
         return true;
       }else if (equip !== -1 && this.equipped !== false){
+        console.log(this.name, "has got their grubby mitts around a", itemToEquip.name, "and has returned", this.equipped.name, "to their stash!");
         this._pack.splice(equip, 1, this.equipped);
         this.equipped = itemToEquip;
         return true;
       }else{
+        console.log(this.name, "doesn't have a", itemToEquip.name,",ya dummy!");
         return false;
       }
     }else{
+      console.log(this.name, "can't use", itemToEquip.name, "as a weapon, ya dummy!");
       return false;
     }
   }
