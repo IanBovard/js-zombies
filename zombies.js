@@ -112,24 +112,44 @@
   }
   checkPack(){
     console.log("Your stash: " + this._pack.join(" , "));
-   return this._pack;
- }
- takeItem(item){
-  if (item instanceof Item){
-    if (this._pack.length < 3){
-      this._pack.push(item);
-      console.log(this.name , "put" , item.name , "in their stash!");
-      return true;
-    }else if (this._pack.length === 3){
-      console.log(this.name , " has not room for this!");
-      return false;
+    return this._pack;
+  }
+  takeItem(item){
+    if (item instanceof Item){
+      if (this._pack.length < 3){
+        this._pack.push(item);
+        console.log(this.name , "added" , item.name , "to their stash!");
+        return true;
+      }else if (this._pack.length === 3){
+        console.log(this.name , " has not room for this!");
+        return false;
+      }
     }
   }
+  discardItem(item){
+    if (item instanceof Item){
+      let trash = this._pack.indexOf(item);
+      if (trash !== -1){
+        this._pack.splice(trash,1);
+        console.log(this.name, "has trashed the", item.name, "from their stash!");
+        return true;
+      }else{
+        console.log(this.name, "doesn't have a", item.name, "to trash!");
+        return false;
+      }
+    }
+  }
+  equip(itemToEquip){
+    if (itemToEquip instanceof Weapon){
+      let equipment = this._pack.indexOf(item);
+      if (equipment !== -1 && this.equipped === false){
+        this.equipped = itemToEquip;
+        return true;
+      }
+    }
+  }
+
 }
-}
-let thisguy = new Player("Guy", 2, 1, 2);
-console.log(thisguy);
-console.log(thisguy.checkPack);
 /**
  * Player Class Method => checkPack()
  * -----------------------------
