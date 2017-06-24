@@ -141,11 +141,20 @@
   }
   equip(itemToEquip){
     if (itemToEquip instanceof Weapon){
-      let equipment = this._pack.indexOf(item);
-      if (equipment !== -1 && this.equipped === false){
+      let equip = this._pack.indexOf(itemToEquip);
+      if (equip !== -1 && this.equipped === false){
+        this.equipped = itemToEquip;
+        this._pack.splice(equip,1);
+        return true;
+      }else if (equip !== -1 && this.equipped !== false){
+        this._pack.splice(equip, 1, this.equipped);
         this.equipped = itemToEquip;
         return true;
+      }else{
+        return false;
       }
+    }else{
+      return false;
     }
   }
 
