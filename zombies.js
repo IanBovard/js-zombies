@@ -8,11 +8,7 @@
  * @param {string} name     The item's name.
  * @property {string} name
  */
- class Item{
-  constructor (name){
-    this.name = name;
-  }
-}
+
 
 /**
  * Class => Weapon(name, damage)
@@ -35,12 +31,7 @@
  * Weapon Extends Item Class
  * -----------------------------
  */
- class Weapon extends Item {
-  constructor (name, damage){
-    super(name);
-    this.damage = damage;
-  }
-}
+
 
 
 /**
@@ -64,13 +55,6 @@
  * Food Extends Item Class
  * -----------------------------
  */
- class Food extends Item {
-  constructor (name, energy){
-    super(name);
-    this.energy = energy;
-  }
-}
-
 
 /**
  * Class => Player(name, health, strength, speed)
@@ -93,76 +77,7 @@
  * @property {method} getPack              Returns private variable `pack`.
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
- class Player {
-  constructor (name, health, strength, speed){
-    this._pack = [];
-    this._maxHealth = health;
-    this.name = name;
-    this.health = health;
-    this.strength = strength;
-    this.speed = speed;
-    this.isAlive = true;
-    this.equipped = false;
-  }
-  getPack(){
-    return this._pack;
-  }
-  getMaxHealth(){
-    return this._maxHealth;
-  }
-  checkPack(){
-    console.log("Your stash: " + this._pack.join(" , "));
-    return this._pack;
-  }
-  takeItem(item){
-    if (item instanceof Item){
-      if (this._pack.length < 3){
-        this._pack.push(item);
-        console.log(this.name , "added" , item.name , "to their stash!");
-        return true;
-      }else if (this._pack.length === 3){
-        console.log(this.name , " has not room for this!");
-        return false;
-      }
-    }
-  }
-  discardItem(item){
-    if (item instanceof Item){
-      let trash = this._pack.indexOf(item);
-      if (trash !== -1){
-        this._pack.splice(trash,1);
-        console.log(this.name, "has trashed the", item.name, "from their stash!");
-        return true;
-      }else{
-        console.log(this.name, "doesn't have a", item.name, "to trash!");
-        return false;
-      }
-    }
-  }
-  equip(itemToEquip){
-    if (itemToEquip instanceof Weapon){
-      let equip = this._pack.indexOf(itemToEquip);
-      if (equip !== -1 && this.equipped === false){
-        this.equipped = itemToEquip;
-        this._pack.splice(equip,1);
-        console.log(this.name, "has got their grubby mitts around a", itemToEquip.name, ", alright!");
-        return true;
-      }else if (equip !== -1 && this.equipped !== false){
-        console.log(this.name, "has got their grubby mitts around a", itemToEquip.name, "and has returned", this.equipped.name, "to their stash!");
-        this._pack.splice(equip, 1, this.equipped);
-        this.equipped = itemToEquip;
-        return true;
-      }else{
-        console.log(this.name, "doesn't have a", itemToEquip.name,",ya dummy!");
-        return false;
-      }
-    }else{
-      console.log(this.name, "can't use", itemToEquip.name, "as a weapon, ya dummy!");
-      return false;
-    }
-  }
 
-}
 /**
  * Player Class Method => checkPack()
  * -----------------------------
@@ -242,7 +157,116 @@
  * @param {Weapon} itemToEquip  The weapon item to equip.
  */
 
-
+ class Item{
+  constructor (name){
+    this.name = name;
+  }
+}
+class Weapon extends Item {
+  constructor (name, damage){
+    super(name);
+    this.damage = damage;
+  }
+}
+class Food extends Item {
+  constructor (name, energy){
+    super(name);
+    this.energy = energy;
+  }
+}
+class Player {
+  constructor (name, health, strength, speed){
+    this._pack = [];
+    this._maxHealth = health;
+    this.name = name;
+    this.health = health;
+    this.strength = strength;
+    this.speed = speed;
+    this.isAlive = true;
+    this.equipped = false;
+  }
+  getPack(){
+    return this._pack;
+  }
+  getMaxHealth(){
+    return this._maxHealth;
+  }
+  checkPack(){
+    console.log("Your stash: " + this._pack.join(" , "));
+    return this._pack;
+  }
+  takeItem(item){
+    if (item instanceof Item){
+      if (this._pack.length < 3){
+        this._pack.push(item);
+        console.log(this.name , "added" , item.name , "to their stash!");
+        return true;
+      }else if (this._pack.length === 3){
+        console.log(this.name , " has not room for this!");
+        return false;
+      }
+    }
+  }
+  discardItem(item){
+    if (item instanceof Item){
+      let trash = this._pack.indexOf(item);
+      if (trash !== -1){
+        this._pack.splice(trash,1);
+        console.log(this.name, "has trashed the", item.name, "from their stash!");
+        return true;
+      }else{
+        console.log(this.name, "doesn't have a", item.name, "to trash!");
+        return false;
+      }
+    }
+  }
+  equip(itemToEquip){
+    if (itemToEquip instanceof Weapon){
+      let equip = this._pack.indexOf(itemToEquip);
+      if (equip !== -1 && this.equipped === false){
+        this.equipped = itemToEquip;
+        this._pack.splice(equip,1);
+        console.log(this.name, "has got their grubby mitts around a", itemToEquip.name, ", alright!");
+        return true;
+      }else if (equip !== -1 && this.equipped !== false){
+        console.log(this.name, "has got their grubby mitts around a", itemToEquip.name, "and has returned th", this.equipped.name, "to their stash!");
+        this._pack.splice(equip, 1, this.equipped);
+        this.equipped = itemToEquip;
+        return true;
+      }else{
+        console.log(this.name, "doesn't have a", itemToEquip.name,",ya dummy!");
+        return false;
+      }
+    }else{
+      console.log(this.name, "can't use", itemToEquip.name, "as a weapon, ya dummy!");
+      return false;
+    }
+  }
+  eat(itemToEat){
+    if (itemToEat instanceof Food){
+      let eatThis = this._pack.indexOf(itemToEat);
+      if (eatThis !== -1){
+        if (this.health + itemToEat.energy > this._maxHealth){
+          this._pack.splice(eatThis, 1);
+          this.health = this._maxHealth;
+          console.log(this.name, "has egorged himself on a", itemToEat.name, ", and is at", this.health, 'health!');
+          return true;
+        }if (this.health + itemToEat.energy < this._maxHealth){
+          this._pack.splice(eatThis, 1);
+          this.health += itemToEat.energy;
+          console.log(this.name, 'has gorged himself on a', itemToEat.name, ", and is at", this.health, 'health!');
+          return true;
+        }
+      }else{
+        console.log(this.name, "doesn't have a", itemToEat.name, "to eat!");
+        return false;
+      }
+    }else{
+      console.log(this.name, "can't eat", itemToEat.name, "ya dummy!");
+      return false;
+    }
+  }
+}
 /**
  * Player Class Method => eat(itemToEat)
  * -----------------------------
