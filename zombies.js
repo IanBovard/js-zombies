@@ -245,7 +245,7 @@ class Player {
     for (let i = 0 ; i < this._pack.length; i++){
       packContents.push(this._pack[i].name);
     }
-    console.log(packContents.join(", "));
+    console.log("Your stash: ",packContents.join(", "));
   }
   takeItem(item){
     if (item instanceof Item){
