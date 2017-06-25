@@ -145,6 +145,52 @@ Player.prototype.discardItem = function (item){
     }
   }
 };
+Player.prototype.equip = function (itemToEquip){
+    if (itemToEquip instanceof Weapon){
+      let equip = this.getPack().indexOf(itemToEquip);
+      if (equip !== -1 && this.equipped === false){
+        this.equipped = itemToEquip;
+        this.getPack().splice(equip,1);
+        console.log(this.name, "has got their grubby mitts around a", itemToEquip.name, ", alright!");
+        return true;
+      }else if (equip !== -1 && this.equipped !== false){
+        console.log(this.name, "has got their grubby mitts around a", itemToEquip.name, "and has returned the", this.equipped.name, "to their stash!");
+        this.getPack().splice(equip, 1, this.equipped);
+        this.equipped = itemToEquip;
+        return true;
+      }else{
+        console.log(this.name, "doesn't have a", itemToEquip.name,",ya dummy!");
+        return false;
+      }
+    }else{
+      console.log(this.name, "can't use", itemToEquip.name, "as a weapon, ya dummy!");
+      return false;
+    }
+  };
+  Player.prototype.eat = function (itemToEat){
+    if (itemToEat instanceof Food){
+      let eatThis = this.getPack().indexOf(itemToEat);
+      if (eatThis !== -1){
+        if (this.health + itemToEat.energy > this._maxHealth){
+          this.getPack().splice(eatThis, 1);
+          this.health = this._maxHealth;
+          console.log(this.name, "has egorged himself on a", itemToEat.name, ", and is at", this.health, 'health!');
+          return true;
+        }if (this.health + itemToEat.energy < this._maxHealth){
+          this.getPack().splice(eatThis, 1);
+          this.health += itemToEat.energy;
+          console.log(this.name, 'has gorged himself on a', itemToEat.name, ", and is at", this.health, 'health!');
+          return true;
+        }
+      }else{
+        console.log(this.name, "doesn't have a", itemToEat.name, "to eat!");
+        return false;
+      }
+    }else{
+      console.log(this.name, "can't eat a", itemToEat.name, "ya dummy!");
+      return false;
+    }
+  }
 /**
  * Player Class Method => checkPack()
  * -----------------------------
