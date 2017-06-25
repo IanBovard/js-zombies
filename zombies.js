@@ -171,12 +171,12 @@ Player.prototype.equip = function (itemToEquip){
     if (itemToEat instanceof Food){
       let eatThis = this.getPack().indexOf(itemToEat);
       if (eatThis !== -1){
-        if (this.health + itemToEat.energy > this._maxHealth){
+        if (this.health + itemToEat.energy > this.getMaxHealth()){
           this.getPack().splice(eatThis, 1);
-          this.health = this._maxHealth;
+          this.health = this.getMaxHealth();
           console.log(this.name, "has egorged himself on a", itemToEat.name, ", and is at", this.health, 'health!');
           return true;
-        }if (this.health + itemToEat.energy < this._maxHealth){
+        }if (this.health + itemToEat.energy < this.getMaxHealth()){
           this.getPack().splice(eatThis, 1);
           this.health += itemToEat.energy;
           console.log(this.name, 'has gorged himself on a', itemToEat.name, ", and is at", this.health, 'health!');
@@ -190,7 +190,7 @@ Player.prototype.equip = function (itemToEquip){
       console.log(this.name, "can't eat a", itemToEat.name, "ya dummy!");
       return false;
     }
-  }
+  };
 /**
  * Player Class Method => checkPack()
  * -----------------------------
