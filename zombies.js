@@ -8,21 +8,7 @@
  * @param {string} name     The item's name.
  * @property {string} name
  */
-function Item (name){
-  this.name = name;
-}
 
-function Weapon (name, damage){
-  Item.call(this, name);
-  this.damage = damage;
-}
-Weapon.prototype = Object.create(Item.prototype);
-
-function Food (name, energy){
-  Item.call(this, name);
-  this.energy = energy;
-}
-Food.prototype = Object.create(Item.prototype);
 
 /**
  * Class => Weapon(name, damage)
@@ -92,6 +78,73 @@ Food.prototype = Object.create(Item.prototype);
  * @property {method} getMaxHealth         Returns private variable `maxHealth`.
  */
 
+ function Item (name){
+  this.name = name;
+}
+
+function Weapon (name, damage){
+  Item.call(this, name);
+  this.damage = damage;
+}
+Weapon.prototype = Object.create(Item.prototype);
+
+function Food (name, energy){
+  Item.call(this, name);
+  this.energy = energy;
+}
+Food.prototype = Object.create(Item.prototype);
+
+function Player(name, health, strength, speed){
+  this.name = name;
+  this.health = health;
+  this.strength = strength;
+  this.speed = speed;
+  this.isAlive = true;
+  this.equipped = false;
+  let pack = [];
+  let maxHealth = health;
+  this.getPack = function(){
+    return pack;
+  };
+  this.getMaxHealth = function(){
+    return maxHealth;
+  };
+
+}
+
+Player.prototype.checkPack = function(){
+  let packContents = [];
+  for (let i = 0 ; i < this.getPack().length; i++){
+    packContents.push(this.getPack()[i].name);
+  }
+  console.log("Your stash: ",packContents.join(", "));
+};
+
+Player.prototype.takeItem = function (item){
+  if (item instanceof Item){
+    if (this.getPack().length < 3){
+      this.getPack().push(item);
+      console.log(this.name , "added" , item.name , "to their stash!");
+      return true;
+    }else if (this.getPack().length === 3){
+      console.log(this.name , " has no room for this!");
+      return false;
+    }
+  }
+};
+Player.prototype.discardItem = function (item){
+  if (item instanceof Item){
+    let trash = this.getPack().indexOf(item);
+    if (trash !== -1){
+      this.getPack().splice(trash,1);
+      console.log(this.name, "has trashed the", item.name, "from their stash!");
+      return true;
+    }else{
+      console.log(this.name, "doesn't have a", item.name, "to trash!");
+      return false;
+    }
+  }
+};
 /**
  * Player Class Method => checkPack()
  * -----------------------------
@@ -334,25 +387,25 @@ Food.prototype = Object.create(Item.prototype);
  * Feel free to edit this and check your game logic.
  */
  function runGame() {
-   // var player = new Player("Joan", 500, 30, 70);
+   var player = new Player("Joan", 500, 30, 70);
    // var zombie = new Zombie(40, 50, 20);
    // var charger = new FastZombie(175, 25, 60);
    // var tank = new StrongZombie(250, 100, 15);
    // var spitter = new RangedZombie(150, 20, 20);
    // var boomer = new ExplodingZombie(50, 15, 10);
 
-   // var shovel = new Weapon("shovel", 15);
-   // var sandwich = new Food("sandwich", 30);
-   // var chainsaw = new Weapon("chainsaw", 25);
+   var shovel = new Weapon("shovel", 15);
+   var sandwich = new Food("sandwich", 30);
+   var chainsaw = new Weapon("chainsaw", 25);
 
-   // player.takeItem(shovel);
-   // player.takeItem(sandwich);
-   // player.takeItem(chainsaw);
-   // player.discardItem(new Weapon("scythe", 21));
-   // player.discardItem(shovel);
-   // player.checkPack();
-   // player.takeItem(shovel);
-   // player.checkPack();
+   player.takeItem(shovel);
+   player.takeItem(sandwich);
+   player.takeItem(chainsaw);
+   player.discardItem(new Weapon("scythe", 21));
+   player.discardItem(shovel);
+   player.checkPack();
+   player.takeItem(shovel);
+   player.checkPack();
 
    // player.equippedWith();
    // player.useItem(chainsaw);
