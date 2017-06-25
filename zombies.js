@@ -191,6 +191,19 @@ Player.prototype.equip = function (itemToEquip){
       return false;
     }
   };
+  Player.prototype.useItem = function (item){
+    this.equip(item);
+    this.eat(item);
+  };
+  Player.prototype.equippedWith = function(){
+    if (this.equipped === false){
+      console.log(this.name, "ain't got nuthin' in those sausage fingers!");
+      return false;
+    }else{
+      console.log(this.name, "has a", this.equipped.name, "at the ready!");
+      return this.equipped.name;
+    }
+  };
 /**
  * Player Class Method => checkPack()
  * -----------------------------
